@@ -1,0 +1,39 @@
+﻿<Page
+    x:Class="WinUI3Net6Beispiel.Views.Sample1View"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUI3Net6Beispiel.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" FontSize="25"
+    xmlns:t="using:Traffic"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel>
+    <TextBlock Text="Beispiel 1" Foreground="blue"/>
+    <TextBlock Text="{x:Bind ViewModel.Info}"/>
+    <CheckBox Name="CBTraffic" Content="Switch lights" Margin="5"/>
+    <t:PedestrianLights IsRed="{x:Bind CBTraffic.IsChecked, Mode=OneWay}"
+                         Margin="10"
+                        HorizontalAlignment="Left"/>
+    <t:PedestrianLights IsRed="{x:Bind CBTraffic.IsChecked, Mode=OneWay}"
+                        Margin="10"
+                        HorizontalAlignment="Left">
+      <t:PedestrianLights.Template>
+        <ControlTemplate TargetType="t:PedestrianLights">
+          <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}">
+            <StackPanel Margin="5">
+              <Rectangle Width="50" Height="50" Fill="Red" Margin="5" Name="PART_LightRed"/>
+              <Rectangle Width="50" Height="50" Fill="LightGreen" Margin="5" Name="PART_LightGreen"/>
+            </StackPanel>
+
+          </Border>
+        </ControlTemplate>
+
+      </t:PedestrianLights.Template>
+    </t:PedestrianLights>
+  </StackPanel>
+</Page>
