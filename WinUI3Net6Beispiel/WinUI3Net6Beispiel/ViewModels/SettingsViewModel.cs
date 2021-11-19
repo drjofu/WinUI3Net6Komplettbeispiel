@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using WinUI3Net6Beispiel.Models;
 using WinUI3Net6Beispiel.Utilities;
 
@@ -11,13 +12,14 @@ namespace WinUI3Net6Beispiel.ViewModels
   [Export(AsSingleton = true)]
   public class SettingsViewModel : ViewModelBase
   {
-    public SettingsViewModel(IShell shell) : base(shell)
+    public SettingsViewModel(IShell shell, SettingsProvider settingsProvider) : base(shell)
     {
       Title = "Settings";
 
       // get current settings
       (isAudioOn, isAudioSpacial) = shell.GetAudio();
-      selectedCulture = CultureInfo.CurrentCulture; 
+      selectedCulture = CultureInfo.CurrentCulture;
+      this.settingsProvider = settingsProvider;
     }
 
     private bool isAudioOn;
@@ -49,8 +51,16 @@ namespace WinUI3Net6Beispiel.ViewModels
     {
       get
       {
-        var version = Windows.ApplicationModel.Package.Current.Id.Version;
-        return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+        try
+        {
+          var version = Windows.ApplicationModel.Package.Current.Id.Version;
+          return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+        }
+        catch (System.Exception)
+        {
+          var asm = Assembly.GetExecutingAssembly();
+          return asm.GetCustomAttribute<AssemblyFileVersionAttribute>().Version;
+        }
       }
     }
 
@@ -69,6 +79,7 @@ namespace WinUI3Net6Beispiel.ViewModels
     public List<CultureInfo> Cultures { get; set; } = new() { CultureInfo.GetCultureInfo("de-DE"), CultureInfo.GetCultureInfo("en-US") };
 
     private CultureInfo selectedCulture;
+    private readonly SettingsProvider settingsProvider;
 
     /// <summary>
     /// Currently selected culture
@@ -89,8 +100,8 @@ namespace WinUI3Net6Beispiel.ViewModels
     /// </summary>
     public string PathMondial
     {
-      get { return (string)Windows.Storage.ApplicationData.Current.LocalSettings.Values["pathMondial"]; }
-      set { Windows.Storage.ApplicationData.Current.LocalSettings.Values["pathMondial"] = value; }
+      get { return (string)settingsProvider["pathMondial"]; }
+      set { settingsProvider["pathMondial"] = value; }
     }
 
   }

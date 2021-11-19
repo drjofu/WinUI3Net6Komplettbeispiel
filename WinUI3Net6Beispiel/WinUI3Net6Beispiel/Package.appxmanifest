@@ -9,7 +9,7 @@
   <Identity
     Name="945fd1b0-2376-4dbd-9b92-add4e8ea3b24"
     Publisher="CN=Joachim"
-    Version="1.0.0.0" />
+    Version="1.0.4.0" />
 
   <Properties>
     <DisplayName>WinUI3Net6Beispiel</DisplayName>

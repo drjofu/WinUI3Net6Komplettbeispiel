@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.ApplicationModel.Resources;
@@ -20,11 +21,11 @@ namespace WinUI3Net6Beispiel
   /// </summary>
   public sealed partial class MainWindow : Window, IShell
   {
-    // shortcut for local settings
-    //private ApplicationDataContainer localSettings;
+
+    private SettingsProvider settingsProvider;
 
     // resource management
-    private ResourceLoader resourceLoader = new();
+    //private ResourceLoader resourceLoader = new();
     private ResourceManager resourceManager = new();
     private ResourceContext resourceContext;
 
@@ -35,16 +36,23 @@ namespace WinUI3Net6Beispiel
     {
       this.InitializeComponent();
 
+    }
+
+
+    internal void Setup(IServiceProvider services)
+    {
+      settingsProvider=services.GetService<SettingsProvider>();
+
+
       // setup app and window settings
-      //localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
       SetupAudio();
 
       // setup culture settings
       resourceContext = resourceManager.CreateResourceContext();
-      //resourceContext.QualifierValues["Language"] = CultureInfo.CurrentCulture.Name; //"de-DE";
+      resourceContext.QualifierValues["Language"] = CultureInfo.CurrentCulture.Name; //"de-DE";
 
-      //var cultureId = (string)localSettings.Values["CultureId"];
-      string cultureId = null;
+      var cultureId = (string)settingsProvider["CultureId"];
+      
       if (cultureId == null) cultureId = CultureInfo.CurrentCulture.Name;
       else
       {
@@ -60,6 +68,8 @@ namespace WinUI3Net6Beispiel
       //  localSettings.Values["pathMondial"] = @"E:\Projekte\Schulungen\Beispiele-Schulungen\WinUI3\FuWinUI3Samples\FuWinUI3Samples\FuWinUI3Samples\Data\mondial.xml";
 
     }
+
+
 
     #region IShell (public available members)
 
@@ -99,8 +109,8 @@ namespace WinUI3Net6Beispiel
       else
         ElementSoundPlayer.SpatialAudioMode = ElementSpatialAudioMode.Off;
 
-      //localSettings.Values["SoundPlayer.State"] = ElementSoundPlayer.State.ToString();
-      //localSettings.Values["SoundPlayer.Spatial"] = ElementSoundPlayer.SpatialAudioMode.ToString();
+      settingsProvider["SoundPlayerState"] = ElementSoundPlayer.State.ToString();
+      settingsProvider["SoundPlayerSpatial"] = ElementSoundPlayer.SpatialAudioMode.ToString();
     }
 
     /// <summary>
@@ -190,7 +200,7 @@ namespace WinUI3Net6Beispiel
       //localSettings.Values["CultureId"] = cultureId;
       CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo(cultureId);
       CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo(cultureId);
-
+      settingsProvider["CultureId"] = cultureId;
       return true;
     }
 
@@ -229,12 +239,12 @@ namespace WinUI3Net6Beispiel
     // setup audio settings
     private void SetupAudio()
     {
-      //string settingsValue = (string)localSettings.Values["SoundPlayer.State"];
-      //if (settingsValue != null)
-      //  ElementSoundPlayer.State = Enum.Parse<ElementSoundPlayerState>(settingsValue);
-      //settingsValue = (string)localSettings.Values["SoundPlayer.Spatial"];
-      //if (settingsValue != null)
-      //  ElementSoundPlayer.SpatialAudioMode = Enum.Parse<ElementSpatialAudioMode>(settingsValue);
+      string settingsValue = (string)settingsProvider["SoundPlayerState"];
+      if (settingsValue != null)
+        ElementSoundPlayer.State = Enum.Parse<ElementSoundPlayerState>(settingsValue);
+      settingsValue = (string)settingsProvider["SoundPlayerSpatial"];
+      if (settingsValue != null)
+        ElementSoundPlayer.SpatialAudioMode = Enum.Parse<ElementSpatialAudioMode>(settingsValue);
     }
 
     //private void MenuItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs e)

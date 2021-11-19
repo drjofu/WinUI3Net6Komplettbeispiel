@@ -37,6 +37,8 @@ namespace WinUI3Net6Beispiel
       // Setup dependency injection
       services = ConfigureServices();
 
+      m_window.Setup(services);
+
       // Setup ViewModel of main window
       ((MainWindow)m_window).ViewModel = Services.GetService<MainViewModel>();
 
@@ -75,7 +77,7 @@ namespace WinUI3Net6Beispiel
       }
     }
 
-    private Window m_window;
+    private MainWindow m_window;
     private IServiceProvider services;
     public IServiceProvider Services => services;
   }

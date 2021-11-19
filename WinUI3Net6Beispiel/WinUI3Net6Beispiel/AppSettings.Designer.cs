@@ -25,13 +25,50 @@ namespace WinUI3Net6Beispiel {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("E:\\Projekte\\Schulungen\\Beispiele-Schulungen\\WinUI3\\FuWinUI3Samples\\FuWinUI3Sample" +
+            "s\\FuWinUI3Samples\\Data\\mondial.xml")]
         public string pathMondial {
             get {
                 return ((string)(this["pathMondial"]));
             }
             set {
                 this["pathMondial"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Off")]
+        public string SoundPlayerState {
+            get {
+                return ((string)(this["SoundPlayerState"]));
+            }
+            set {
+                this["SoundPlayerState"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Off")]
+        public string SoundPlayerSpatial {
+            get {
+                return ((string)(this["SoundPlayerSpatial"]));
+            }
+            set {
+                this["SoundPlayerSpatial"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("de-DE")]
+        public string CultureId {
+            get {
+                return ((string)(this["CultureId"]));
+            }
+            set {
+                this["CultureId"] = value;
             }
         }
     }

@@ -11,6 +11,11 @@
 		<UseWinUI>true</UseWinUI>
 		<EnablePreviewMsixTooling>false</EnablePreviewMsixTooling>
 		<WindowsPackageType>None</WindowsPackageType>
+		<AssemblyVersion>1.0.6</AssemblyVersion>
+		<FileVersion>1.0.7</FileVersion>
+		<Copyright>drjofu</Copyright>
+		<!--<AssemblyVersion>1.0.1</AssemblyVersion>
+		<FileVersion>1.0.2</FileVersion>-->
 
 	</PropertyGroup>
 

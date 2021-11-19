@@ -3,7 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="pathMondial" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">E:\Projekte\Schulungen\Beispiele-Schulungen\WinUI3\FuWinUI3Samples\FuWinUI3Samples\FuWinUI3Samples\Data\mondial.xml</Value>
+    </Setting>
+    <Setting Name="SoundPlayerState" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Off</Value>
+    </Setting>
+    <Setting Name="SoundPlayerSpatial" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Off</Value>
+    </Setting>
+    <Setting Name="CultureId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">de-DE</Value>
     </Setting>
   </Settings>
 </SettingsFile>

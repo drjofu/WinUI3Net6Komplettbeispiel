@@ -15,14 +15,15 @@ namespace WinUI3Net6Beispiel.Models
   [Export(AsSingleton = true)]
   public class World
   {
+    private readonly SettingsProvider settingsProvider;
+
     public string Title { get; set; } = "Our world";
 
     public List<Continent> Continents { get; }
 
-    public World()
+    public World(SettingsProvider settingsProvider)
     {
-      Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
-      string path = (string)localSettings.Values["pathMondial"];
+      string path = (string)settingsProvider["pathMondial"];
       try
       {
         XDocument xDoc = XDocument.Load(path);
@@ -57,8 +58,9 @@ namespace WinUI3Net6Beispiel.Models
       }
       catch (Exception)
       {
-        localSettings.Values.Remove("pathMondial");
       }
+
+      this.settingsProvider = settingsProvider;
     }
   }
 }

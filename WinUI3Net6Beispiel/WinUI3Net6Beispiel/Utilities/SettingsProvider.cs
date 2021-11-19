@@ -37,7 +37,16 @@ namespace WinUI3Net6Beispiel.Utilities
       {
         if (localSettings != null)
           return localSettings.Values[key];
-        var v = appSettings?[key];
+
+
+        object v = null;
+        try
+        {
+          v = appSettings[key];
+        }
+        catch (Exception)
+        {
+        }
         return v;
       }
       set
@@ -48,14 +57,15 @@ namespace WinUI3Net6Beispiel.Utilities
         }
         else
         {
-          if(appSettings?[key] != null)
+          try
           {
             appSettings[key] = value;
             appSettings.Save();
+
           }
-          else
+          catch (Exception ex)
           {
-            Debugger.Log(5, "hoppla","aha");
+            Debug.WriteLine($"Setting [{key}] not save: {ex.Message}");
           }
         }
       }
